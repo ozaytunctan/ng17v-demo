@@ -1,5 +1,6 @@
-import { Injectable } from '@angular/core';
-import { map, Observable, of } from 'rxjs';
+import {Injectable, Signal} from '@angular/core';
+import {map, Observable, of} from 'rxjs';
+import {toSignal} from "@angular/core/rxjs-interop";
 
 export interface Book {
   id: string;
@@ -9,7 +10,7 @@ export interface Book {
   viewTransitionName: string;
 }
 
-const MOCK: Array<Book> = [
+export const MOCK: Book[] = [
   {
     id: 'clean-code',
     title: 'Clean Code: A handbook of Agile Software Craftsmanship',
@@ -45,8 +46,8 @@ const MOCK: Array<Book> = [
   providedIn: 'root',
 })
 export class BooksService {
-  getBooks(): Observable<Array<Book>> {
-    return of(MOCK);
+  getBooks(): Signal<Book[] | undefined> {
+    return toSignal(of(MOCK));
   }
 
   getById(id: string): Observable<Book> {

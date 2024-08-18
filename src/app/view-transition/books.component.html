@@ -1,8 +1,11 @@
 <div class="page">
   <h1>Books</h1>
   <div class="books-container">
-    <ng-container *ngFor="let book of books$ | async">
-      <a class="book" [routerLink]="book.id">
+    @for (book of books(); track book.id; let isFirst = $first) {
+      <a class="book"
+         [routerLink]="book.id"
+         [relativeTo]="activeRoute"
+         [state]="book">
         <img
           [attr.alt]="book.title"
           [src]="book.img"
@@ -11,6 +14,8 @@
           [style]="book.viewTransitionName"
         />
       </a>
-    </ng-container>
+    } @empty {
+      <p> Empty Books</p>
+    }
   </div>
 </div>
